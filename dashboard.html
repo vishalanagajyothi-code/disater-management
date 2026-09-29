@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>D-MAS Emergency Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* ================= DASHBOARD ================= */
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .dashboard-header {
+            background: #0b2239;
+            color: white;
+            padding: 35px 40px 25px;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .dashboard-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .dashboard-title h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .dashboard-title p {
+            margin: 8px 0 0;
+            color: #dbeafe;
+        }
+
+        .admin-btn {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 8px;
+            background: #8b1db5;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .admin-btn:hover {
+            opacity: 0.9;
+        }
+
+        .dashboard-nav {
+            display: flex;
+            justify-content: flex-end;
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        .dashboard-nav a {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* ================= STATS ================= */
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .dashboard-stat {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .dashboard-stat .icon {
+            font-size: 28px;
+        }
+
+        .dashboard-stat h3 {
+            margin: 8px 0 5px;
+            font-size: 19px;
+        }
+
+        .dashboard-stat .number {
+            font-size: 25px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .online {
+            color: #16a34a !important;
+            font-size: 18px !important;
+        }
+
+        /* ================= REPORT SECTION ================= */
+
+        .dashboard-section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            color: #172554;
+        }
+
+        .section-heading p {
+            margin: 5px 0 0;
+            color: #64748b;
+        }
+
+        .report-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #ef3333;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* ================= REPORT TABLE ================= */
+
+        .dashboard-table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .dashboard-table {
+            width: 100%;
+            min-width: 750px;
+            border-collapse: collapse;
+        }
+
+        .dashboard-table th {
+            background: #f1f5f9;
+            padding: 14px;
+            text-align: left;
+            color: #172033;
+        }
+
+        .dashboard-table td {
+            padding: 14px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .dashboard-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .report-row {
+            cursor: pointer;
+        }
+
+        .severity {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .severity.high {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .severity.medium {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .severity.low {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .status {
+            font-weight: 600;
+        }
+
+        .empty-reports {
+            text-align: center;
+            padding: 35px;
+            color: #64748b;
+            background: #f8fafc;
+            border-radius: 10px;
+        }
+
+        /* ================= RECENT ALERTS ================= */
+
+        .alert-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f8fafc;
+            border-left: 4px solid #2563eb;
+        }
+
+        .alert-icon {
+            font-size: 25px;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-content strong {
+            display: block;
+            color: #172033;
+        }
+
+        .alert-content span {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* ================= QUICK ACTIONS ================= */
+
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .quick-actions button {
+            padding: 13px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #1976d2;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .quick-actions button:hover {
+            opacity: 0.9;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 900px) {
+
+            .dashboard-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .dashboard-title {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .dashboard-title h1 {
+                font-size: 28px;
+            }
+
+            .dashboard-nav {
+                justify-content: flex-start;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .section-heading {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="dashboard-header">
+
+        <div class="dashboard-title">
+
+            <div>
+
+                <h1>
+                    📊 Emergency Dashboard
+                </h1>
+
+                <p>
+                    Monitor and manage disaster emergencies in real time.
+                </p>
+
+            </div>
+
+
+            <button
+                class="admin-btn"
+                onclick="openAdminLogin()">
+
+                👨‍💼 Admin Panel
+
+            </button>
+
+        </div>
+
+
+        <div class="dashboard-nav">
+
+            <a onclick="goHome()">
+                Home
+            </a>
+
+            <a onclick="openDashboard()">
+                Dashboard
+            </a>
+
+            <a onclick="openAlert()">
+                Emergency Alert
+            </a>
+
+            <a onclick="openMap()">
+                Map
+            </a>
+
+        </div>
+
+
+        <div style="margin-top:20px;font-size:25px;font-weight:bold;">
+            🚨 D-MAS
+        </div>
+
+    </header>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="dashboard-container">
+
+
+        <!-- ================= STATISTICS ================= -->
+
+        <section class="dashboard-stats">
+
+
+            <div class="dashboard-stat">
+
+                <div class="icon">
+                    🚨
+                </div>
+
+                <h3>
+                    Active Emergencies
+                </h3>
+
+                <div
+                    id="dashboardActiveReports"
+                    class="number">
+
+                    0
+
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-stat">
+
+                <div class="icon">
+                    🛡️
+                </div>
+
+                <h3>
+                    Safe Zones
+                </h3>
+
+                <div class="number">
+                    4
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-stat">
+
+                <div class="icon">
+                    🚑
+                </div>
+
+                <h3>
+                    Rescue Teams
+                </h3>
+
+                <div class="number">
+                    8
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-stat">
+
+                <div class="icon">
+                    📡
+                </div>
+
+                <h3>
+                    System Status
+                </h3>
+
+                <div class="number online">
+                    Online
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ================= EMERGENCY REPORTS ================= -->
+
+        <section class="dashboard-section">
+
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        🚨 Emergency Reports
+                    </h2>
+
+                    <p>
+                        Click a report to view complete details.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="report-btn"
+                    onclick="openAlert()">
+
+                    + Report Emergency
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="dashboardReportsArea"
+                class="dashboard-table-wrapper">
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ================= RECENT ALERTS ================= -->
+
+        <section class="dashboard-section">
+
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        🔔 Recent Alerts
+                    </h2>
+
+                    <p>
+                        Latest emergency notifications.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="dashboardRecentAlerts"
+                class="alert-list">
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ================= QUICK ACTIONS ================= -->
+
+        <section class="dashboard-section">
+
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        ⚡ Quick Actions
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="quick-actions">
+
+                <button onclick="openAlert()">
+                    🚨 Report Emergency
+                </button>
+
+                <button onclick="openMap()">
+                    🗺️ View Disaster Map
+                </button>
+
+                <button onclick="openShelters()">
+                    🛡️ Safe Zones
+                </button>
+
+                <button onclick="openRescue()">
+                    🚑 Rescue Teams
+                </button>
+
+                <button onclick="openReports()">
+                    📋 All Reports
+                </button>
+
+                <button onclick="openAdminLogin()">
+                    👨‍💼 Admin Panel
+                </button>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="main-footer">
+
+        <p>
+            🚨 D-MAS — Disaster Management and Emergency Alert System
+        </p>
+
+        <p>
+            Emergency Dashboard
+        </p>
+
+    </footer>
+
+
+
+    <!-- ================= SCRIPT ================= -->
+
+    <script src="script.js"></script>
+
+
+    <script>
+
+        /* ================= GET REPORTS ================= */
+
+        function getDashboardReports() {
+
+            try {
+
+                var reports =
+                    JSON.parse(
+                        localStorage.getItem("disasterReports")
+                    );
+
+                if (Array.isArray(reports)) {
+                    return reports;
+                }
+
+                return [];
+
+            } catch (error) {
+
+                return [];
+
+            }
+
+        }
+
+
+
+        /* ================= ICON ================= */
+
+        function getDashboardIcon(type) {
+
+            var value =
+                String(type || "").toLowerCase();
+
+
+            if (value.includes("flood")) {
+                return "🌊";
+            }
+
+            if (value.includes("fire")) {
+                return "🔥";
+            }
+
+            if (value.includes("cyclone")) {
+                return "🌀";
+            }
+
+            if (value.includes("earthquake")) {
+                return "🌎";
+            }
+
+            if (value.includes("electrical")) {
+                return "🚨";
+            }
+
+            return "🚨";
+
+        }
+
+
+
+        /* ================= LOAD REPORTS ================= */
+
+        function loadDashboardPageReports() {
+
+            var reports =
+                getDashboardReports();
+
+
+            var activeCount = 0;
+
+
+            reports.forEach(function(report) {
+
+                if (
+                    String(report.status || "")
+                        .toLowerCase() !== "resolved"
+                ) {
+
+                    activeCount++;
+
+                }
+
+            });
+
+
+            var activeElement =
+                document.getElementById(
+                    "dashboardActiveReports"
+                );
+
+
+            if (activeElement) {
+
+                activeElement.innerText =
+                    activeCount;
+
+            }
+
+
+            var area =
+                document.getElementById(
+                    "dashboardReportsArea"
+                );
+
+
+            if (!area) return;
+
+
+            if (reports.length === 0) {
+
+                area.innerHTML = `
+
+                    <div class="empty-reports">
+
+                        📭 No Emergency Reports
+
+                        <br>
+
+                        <span>
+                            New emergency reports will appear here.
+                        </span>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            /*
+             * Latest reports first
+             */
+
+            var sortedReports =
+                reports.slice().reverse();
+
+
+            var html = `
+
+                <table class="dashboard-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Emergency</th>
+                            <th>Location</th>
+                            <th>Severity</th>
+                            <th>Date & Time</th>
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+            `;
+
+
+            sortedReports.forEach(function(report) {
+
+
+                var severity =
+                    String(
+                        report.severity || "Medium"
+                    );
+
+
+                var severityClass =
+                    severity.toLowerCase();
+
+
+                html += `
+
+                    <tr
+                        class="report-row"
+                        onclick="openEmergencyDetails(${report.id})">
+
+                        <td>
+                            ${getDashboardIcon(report.type)}
+                            ${escapeDashboardHTML(
+                                report.type || "Emergency"
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeDashboardHTML(
+                                report.location || "Unknown"
+                            )}
+                        </td>
+
+                        <td>
+
+                            <span class="severity ${severityClass}">
+
+                                ${escapeDashboardHTML(severity)}
+
+                            </span>
+
+                        </td>
+
+                        <td>
+                            ${escapeDashboardHTML(
+                                report.date || "Just now"
+                            )}
+                        </td>
+
+                        <td>
+
+                            <span class="status">
+
+                                ${escapeDashboardHTML(
+                                    report.status ||
+                                    "Under Investigation"
+                                )}
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            });
+
+
+            html += `
+
+                    </tbody>
+
+                </table>
+
+            `;
+
+
+            area.innerHTML = html;
+
+        }
+
+
+
+        /* ================= RECENT ALERTS ================= */
+
+        function loadDashboardRecentAlerts() {
+
+            var reports =
+                getDashboardReports();
+
+
+            var container =
+                document.getElementById(
+                    "dashboardRecentAlerts"
+                );
+
+
+            if (!container) return;
+
+
+            if (reports.length === 0) {
+
+                container.innerHTML = `
+
+                    <div class="empty-reports">
+
+                        📭 No Emergency Alerts
+
+                        <br>
+
+                        <span>
+                            Waiting for reports.
+                        </span>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            var latest =
+                reports.slice().reverse().slice(0, 5);
+
+
+            var html = "";
+
+
+            latest.forEach(function(report) {
+
+
+                html += `
+
+                    <div class="alert-item">
+
+                        <div class="alert-icon">
+
+                            ${getDashboardIcon(report.type)}
+
+                        </div>
+
+
+                        <div class="alert-content">
+
+                            <strong>
+
+                                ${escapeDashboardHTML(
+                                    report.type ||
+                                    "Emergency"
+                                )}
+
+                            </strong>
+
+                            <span>
+
+                                📍
+                                ${escapeDashboardHTML(
+                                    report.location ||
+                                    "Unknown location"
+                                )}
+
+                                &nbsp; | &nbsp;
+
+                                ${escapeDashboardHTML(
+                                    report.status ||
+                                    "Under Investigation"
+                                )}
+
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            ${escapeDashboardHTML(
+                                report.date || ""
+                            )}
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            });
+
+
+            container.innerHTML = html;
+
+        }
+
+
+
+        /* ================= ESCAPE HTML ================= */
+
+        function escapeDashboardHTML(value) {
+
+            var div =
+                document.createElement("div");
+
+            div.textContent =
+                String(value);
+
+            return div.innerHTML;
+
+        }
+
+
+
+        /* ================= PAGE LOAD ================= */
+
+        window.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+                loadDashboardPageReports();
+
+                loadDashboardRecentAlerts();
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>
+

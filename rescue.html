@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>D-MAS Rescue Teams</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="main-header">
+
+        <div class="logo">
+            🚨 D-MAS
+        </div>
+
+        <nav class="main-nav">
+
+            <button onclick="openDashboard()">
+                🏠 Dashboard
+            </button>
+
+            <button onclick="openAlert()">
+                🚨 Report Emergency
+            </button>
+
+            <button onclick="openMap()">
+                🗺️ Map
+            </button>
+
+            <button onclick="openShelters()">
+                🏠 Shelters
+            </button>
+
+            <button onclick="openRescue()">
+                🚑 Rescue Teams
+            </button>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="rescue-container">
+
+        <!-- TITLE -->
+
+        <div class="page-title">
+
+            <h1>
+                🚑 Rescue Team Management
+            </h1>
+
+            <p>
+                Monitor rescue teams and their current status
+            </p>
+
+        </div>
+
+
+
+        <!-- ================= SEARCH ================= -->
+
+        <div class="rescue-search-box">
+
+            <input
+                type="text"
+                id="rescueSearch"
+                placeholder="🔍 Search rescue team..."
+                onkeyup="filterRescueTeams(this.value)"
+            >
+
+        </div>
+
+
+
+        <!-- ================= RESCUE TEAMS ================= -->
+
+        <section class="rescue-team-list">
+
+
+            <!-- TEAM 1 -->
+
+            <div
+                class="rescue-team-card"
+                data-team="Alpha Rescue Team">
+
+                <div class="rescue-team-icon">
+                    🚑
+                </div>
+
+                <div class="rescue-team-info">
+
+                    <h2>
+                        Alpha Rescue Team
+                    </h2>
+
+                    <p>
+                        📍 Main Area
+                    </p>
+
+                    <p>
+                        👥 Team Members:
+                        <strong>8</strong>
+                    </p>
+
+                    <p>
+                        📞 Contact:
+                        <strong>Emergency Control</strong>
+                    </p>
+
+                    <span
+                        class="rescue-status available">
+                        🟢 Available
+                    </span>
+
+                </div>
+
+
+                <div class="rescue-team-action">
+
+                    <label>
+                        Status
+                    </label>
+
+                    <select
+                        onchange="updateRescueStatus('Alpha Rescue Team', this.value)">
+
+                        <option value="Available">
+                            Available
+                        </option>
+
+                        <option value="Busy">
+                            Busy
+                        </option>
+
+                        <option value="On Mission">
+                            On Mission
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TEAM 2 -->
+
+            <div
+                class="rescue-team-card"
+                data-team="Bravo Rescue Team">
+
+                <div class="rescue-team-icon">
+                    🚒
+                </div>
+
+                <div class="rescue-team-info">
+
+                    <h2>
+                        Bravo Rescue Team
+                    </h2>
+
+                    <p>
+                        📍 North Area
+                    </p>
+
+                    <p>
+                        👥 Team Members:
+                        <strong>6</strong>
+                    </p>
+
+                    <p>
+                        📞 Contact:
+                        <strong>Emergency Control</strong>
+                    </p>
+
+                    <span
+                        class="rescue-status busy">
+                        🟠 Busy
+                    </span>
+
+                </div>
+
+
+                <div class="rescue-team-action">
+
+                    <label>
+                        Status
+                    </label>
+
+                    <select
+                        onchange="updateRescueStatus('Bravo Rescue Team', this.value)">
+
+                        <option value="Available">
+                            Available
+                        </option>
+
+                        <option value="Busy" selected>
+                            Busy
+                        </option>
+
+                        <option value="On Mission">
+                            On Mission
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TEAM 3 -->
+
+            <div
+                class="rescue-team-card"
+                data-team="Charlie Rescue Team">
+
+                <div class="rescue-team-icon">
+                    🛟
+                </div>
+
+                <div class="rescue-team-info">
+
+                    <h2>
+                        Charlie Rescue Team
+                    </h2>
+
+                    <p>
+                        📍 East Area
+                    </p>
+
+                    <p>
+                        👥 Team Members:
+                        <strong>10</strong>
+                    </p>
+
+                    <p>
+                        📞 Contact:
+                        <strong>Emergency Control</strong>
+                    </p>
+
+                    <span
+                        class="rescue-status on-mission">
+                        🔴 On Mission
+                    </span>
+
+                </div>
+
+
+                <div class="rescue-team-action">
+
+                    <label>
+                        Status
+                    </label>
+
+                    <select
+                        onchange="updateRescueStatus('Charlie Rescue Team', this.value)">
+
+                        <option value="Available">
+                            Available
+                        </option>
+
+                        <option value="Busy">
+                            Busy
+                        </option>
+
+                        <option value="On Mission" selected>
+                            On Mission
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TEAM 4 -->
+
+            <div
+                class="rescue-team-card"
+                data-team="Delta Rescue Team">
+
+                <div class="rescue-team-icon">
+                    🚁
+                </div>
+
+                <div class="rescue-team-info">
+
+                    <h2>
+                        Delta Rescue Team
+                    </h2>
+
+                    <p>
+                        📍 South Area
+                    </p>
+
+                    <p>
+                        👥 Team Members:
+                        <strong>7</strong>
+                    </p>
+
+                    <p>
+                        📞 Contact:
+                        <strong>Emergency Control</strong>
+                    </p>
+
+                    <span
+                        class="rescue-status available">
+                        🟢 Available
+                    </span>
+
+                </div>
+
+
+                <div class="rescue-team-action">
+
+                    <label>
+                        Status
+                    </label>
+
+                    <select
+                        onchange="updateRescueStatus('Delta Rescue Team', this.value)">
+
+                        <option value="Available">
+                            Available
+                        </option>
+
+                        <option value="Busy">
+                            Busy
+                        </option>
+
+                        <option value="On Mission">
+                            On Mission
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- NO RESULTS -->
+
+        <div
+            id="noRescueResults"
+            class="no-rescue-results">
+
+            📭 No rescue teams found.
+
+        </div>
+
+
+    </main>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="main-footer">
+
+        <p>
+            🚨 D-MAS — Disaster Management and Emergency Alert System
+        </p>
+
+        <p>
+            Rescue Team Management
+        </p>
+
+    </footer>
+
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
+

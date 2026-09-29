@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>D-MAS Emergency Map</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="main-header">
+
+        <div class="logo">
+            🚨 D-MAS
+        </div>
+
+        <nav class="main-nav">
+
+            <button onclick="openDashboard()">
+                🏠 Dashboard
+            </button>
+
+            <button onclick="openAlert()">
+                🚨 Report Emergency
+            </button>
+
+            <button onclick="openMap()">
+                🗺️ Map
+            </button>
+
+            <button onclick="openShelters()">
+                🏠 Shelters
+            </button>
+
+            <button onclick="openRescue()">
+                🚑 Rescue Teams
+            </button>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="map-container">
+
+        <div class="page-title">
+
+            <h1>
+                🗺️ Emergency Map
+            </h1>
+
+            <p>
+                View emergency locations and nearby safe zones
+            </p>
+
+        </div>
+
+
+        <!-- ================= SEARCH ================= -->
+
+        <div class="map-search-box">
+
+            <input
+                type="text"
+                id="mapSearch"
+                placeholder="🔍 Search location..."
+                onkeyup="searchMapLocation(this.value)"
+            >
+
+            <button onclick="searchMapLocation()">
+                Search
+            </button>
+
+            <button
+                onclick="showUserLocation()"
+                class="location-button">
+
+                📍 You Are Here
+
+            </button>
+
+        </div>
+
+
+        <!-- ================= MAP ================= -->
+
+        <section class="map-section">
+
+            <div
+                id="emergencyMap"
+                class="emergency-map">
+
+
+                <!-- ================= EMERGENCY MARKERS ================= -->
+
+                <div
+                    class="map-marker emergency-marker"
+                    id="floodMarker"
+                    style="top:20%; left:25%;"
+                    onclick="showMarkerInfo('Flood')">
+
+                    🌊
+
+                </div>
+
+
+                <div
+                    class="map-marker emergency-marker"
+                    id="fireMarker"
+                    style="top:35%; left:75%;"
+                    onclick="showMarkerInfo('Fire')">
+
+                    🔥
+
+                </div>
+
+
+                <div
+                    class="map-marker warning-marker"
+                    id="cycloneMarker"
+                    style="top:55%; left:75%;"
+                    onclick="showMarkerInfo('Cyclone')">
+
+                    🌀
+
+                </div>
+
+
+                <!-- ================= SHELTERS ================= -->
+
+                <div
+                    class="map-marker safe-marker"
+                    id="governmentSchoolMarker"
+                    style="top:65%; left:25%;"
+                    onclick="showMarkerInfo('Government School')">
+
+                    🏫
+
+                </div>
+
+
+                <div
+                    class="map-marker safe-marker"
+                    id="communityHallMarker"
+                    style="top:75%; left:55%;"
+                    onclick="showMarkerInfo('Community Hall')">
+
+                    🏢
+
+                </div>
+
+
+                <div
+                    class="map-marker safe-marker"
+                    id="reliefCenterMarker"
+                    style="top:30%; left:60%;"
+                    onclick="showMarkerInfo('Relief Center')">
+
+                    🏥
+
+                </div>
+
+
+                <div
+                    class="map-marker safe-marker"
+                    id="stadiumShelterMarker"
+                    style="top:82%; left:35%;"
+                    onclick="showMarkerInfo('Stadium Shelter')">
+
+                    🏟️
+
+                </div>
+
+
+                <!-- ================= SERVICES ================= -->
+
+                <div
+                    class="map-marker hospital-marker"
+                    id="hospitalMarker"
+                    style="top:42%; left:45%;"
+                    onclick="showMarkerInfo('Emergency Hospital')">
+
+                    🏥
+
+                </div>
+
+
+                <div
+                    class="map-marker fire-marker"
+                    id="fireStationMarker"
+                    style="top:70%; left:78%;"
+                    onclick="showMarkerInfo('Fire Station')">
+
+                    🚒
+
+                </div>
+
+
+                <div
+                    class="map-marker police-marker"
+                    id="policeMarker"
+                    style="top:35%; left:15%;"
+                    onclick="showMarkerInfo('Police Station')">
+
+                    👮
+
+                </div>
+
+
+                <!-- ================= USER LOCATION ================= -->
+
+                <div
+                    class="user-marker"
+                    id="userLocation"
+                    style="top:48%; left:52%;">
+
+                    📍
+
+                </div>
+
+
+                <!-- ================= NAVIGATION ROUTE ================= -->
+
+                <div
+                    id="navigationRoute"
+                    class="navigation-route">
+                </div>
+
+            </div>
+
+
+            <!-- ================= MAP INFO ================= -->
+
+            <div
+                class="map-info"
+                id="mapInfo">
+
+                <h3>
+                    📍 Select a location
+                </h3>
+
+                <p>
+                    Click any marker to view information.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= NAVIGATION ================= -->
+
+        <div class="navigation-section">
+
+            <button
+                onclick="startNavigation()"
+                class="navigation-button">
+
+                🚶 START NAVIGATION
+
+            </button>
+
+        </div>
+
+
+        <!-- ================= LEGEND ================= -->
+
+        <section class="map-legend">
+
+            <h3>
+                Map Legend
+            </h3>
+
+
+            <div class="legend-item">
+
+                <span class="legend-icon">
+                    🌊
+                </span>
+
+                Emergency
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <span class="legend-icon">
+                    🏫
+                </span>
+
+                Safe Zone
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <span class="legend-icon">
+                    🏥
+                </span>
+
+                Medical
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <span class="legend-icon">
+                    🚒
+                </span>
+
+                Fire Station
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <span class="legend-icon">
+                    👮
+                </span>
+
+                Police
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <span class="legend-icon">
+                    📍
+                </span>
+
+                Your Location
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="main-footer">
+
+        <p>
+            🚨 D-MAS — Disaster Management and Emergency Alert System
+        </p>
+
+        <p>
+            Emergency Map
+        </p>
+
+    </footer>
+
+
+    <!-- ================= SCRIPT ================= -->
+
+    <script src="script.js"></script>
+
+    <script>
+
+        window.addEventListener("DOMContentLoaded", function () {
+
+            var selectedShelter =
+                localStorage.getItem("selectedShelter");
+
+            var navigationMode =
+                localStorage.getItem("navigationMode");
+
+
+            if (selectedShelter) {
+
+                if (typeof showMarkerInfo === "function") {
+                    showMarkerInfo(selectedShelter);
+                }
+
+
+                if (
+                    navigationMode === "navigate" &&
+                    typeof startShelterNavigation === "function"
+                ) {
+
+                    startShelterNavigation(selectedShelter);
+
+                }
+
+
+                localStorage.removeItem("selectedShelter");
+
+                localStorage.removeItem("navigationMode");
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>

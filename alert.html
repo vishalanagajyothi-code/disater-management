@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Emergency Alert</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ======================================
+     HEADER
+====================================== -->
+
+<header class="header">
+
+    <div class="logo">
+        🚨 D-MAS
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="alert.html">
+            Emergency Alert
+        </a>
+
+        <a href="map.html">
+            Map
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ======================================
+     PAGE HEADER
+====================================== -->
+
+<section class="alert-page-header">
+
+    <h1>
+        🚨 Emergency Alert Center
+    </h1>
+
+    <p>
+        Report a disaster or emergency situation
+        to the response management system.
+    </p>
+
+</section>
+
+
+
+<!-- ======================================
+     ALERT SECTION
+====================================== -->
+
+<section class="alert-section">
+
+
+    <!-- ==================================
+         REPORT FORM CONTAINER
+    =================================== -->
+
+    <div class="alert-form-container">
+
+
+        <!-- ==================================
+             EXISTING EMERGENCY DETAILS
+        =================================== -->
+
+        <div id="emergencyDetails"
+             style="display:none;">
+
+            <div class="form-title">
+
+                <h2>
+                    🚨 Emergency Details
+                </h2>
+
+                <p>
+                    Details of the selected emergency report.
+                </p>
+
+            </div>
+
+
+            <!-- Emergency Type -->
+
+            <div class="form-group">
+
+                <label>
+                    Disaster Type
+                </label>
+
+                <div id="detailType">
+                    -
+                </div>
+
+            </div>
+
+
+            <!-- Location -->
+
+            <div class="form-group">
+
+                <label>
+                    Emergency Location
+                </label>
+
+                <div id="detailLocation">
+                    -
+                </div>
+
+            </div>
+
+
+            <!-- Severity -->
+
+            <div class="form-group">
+
+                <label>
+                    Emergency Severity
+                </label>
+
+                <div id="detailSeverity">
+                    -
+                </div>
+
+            </div>
+
+
+            <!-- Description -->
+
+            <div class="form-group">
+
+                <label>
+                    Emergency Description
+                </label>
+
+                <div id="detailDescription">
+                    -
+                </div>
+
+            </div>
+
+
+            <!-- Contact -->
+
+            <div class="form-group">
+
+                <label>
+                    Reporter Contact
+                </label>
+
+                <div id="detailContact">
+                    -
+                </div>
+
+            </div>
+
+
+            <!-- Date -->
+
+            <div class="form-group">
+
+                <label>
+                    Date & Time
+                </label>
+
+                <div id="detailDate">
+                    -
+                </div>
+
+            </div>
+
+
+            <!-- Status -->
+
+            <div class="form-group">
+
+                <label>
+                    Current Status
+                </label>
+
+                <div id="detailStatus">
+                    -
+                </div>
+
+            </div>
+
+
+            <!-- DETAILS BUTTONS -->
+
+            <div class="form-buttons">
+
+
+                <button
+                    type="button"
+                    class="send-alert-btn"
+                    onclick="openMap()">
+
+                    🗺️ VIEW LOCATION ON MAP
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="send-alert-btn"
+                    onclick="newIncidentReport()">
+
+                    📝 NEW INCIDENT REPORT
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="openDashboard()">
+
+                    ← BACK TO DASHBOARD
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==================================
+             NEW INCIDENT REPORT FORM
+        =================================== -->
+
+        <div id="reportSection">
+
+
+            <div class="form-title">
+
+                <h2>
+                    Report Emergency
+                </h2>
+
+                <p>
+                    Please provide accurate information
+                    about the emergency.
+                </p>
+
+            </div>
+
+
+
+            <form id="emergencyForm">
+
+
+                <!-- DISASTER TYPE -->
+
+                <div class="form-group">
+
+                    <label for="disasterType">
+                        Disaster Type
+                    </label>
+
+
+                    <select
+                        id="disasterType"
+                        required>
+
+                        <option value="">
+                            Select Disaster Type
+                        </option>
+
+                        <option value="Flood">
+                            🌊 Flood
+                        </option>
+
+                        <option value="Fire">
+                            🔥 Fire
+                        </option>
+
+                        <option value="Cyclone">
+                            🌪️ Cyclone
+                        </option>
+
+                        <option value="Earthquake">
+                            🌎 Earthquake
+                        </option>
+
+                        <option value="Electrical Emergency">
+                            ⚡ Electrical Emergency
+                        </option>
+
+                        <option value="Industrial Accident">
+                            🏭 Industrial Accident
+                        </option>
+
+                        <option value="Other">
+                            ⚠️ Other Emergency
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- LOCATION -->
+
+                <div class="form-group">
+
+                    <label for="location">
+                        Emergency Location
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="location"
+                        placeholder="Enter emergency location"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- SEVERITY -->
+
+                <div class="form-group">
+
+                    <label for="severity">
+                        Emergency Severity
+                    </label>
+
+
+                    <select
+                        id="severity"
+                        required>
+
+                        <option value="">
+                            Select Severity
+                        </option>
+
+                        <option value="Low">
+                            🟢 Low
+                        </option>
+
+                        <option value="Medium">
+                            🟡 Medium
+                        </option>
+
+                        <option value="High">
+                            🔴 High
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label for="description">
+                        Emergency Description
+                    </label>
+
+
+                    <textarea
+                        id="description"
+                        rows="6"
+                        placeholder="Describe what happened..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- CONTACT -->
+
+                <div class="form-group">
+
+                    <label for="contact">
+                        Reporter Contact
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="contact"
+                        placeholder="Enter contact number"
+                    >
+
+                </div>
+
+
+
+                <!-- BUTTONS -->
+
+                <div class="form-buttons">
+
+
+                    <button
+                        type="submit"
+                        class="send-alert-btn">
+
+                        🚨 SEND EMERGENCY ALERT
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        onclick="goHome()">
+
+                        Cancel
+
+                    </button>
+
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==================================
+         INFORMATION BOX
+    =================================== -->
+
+    <div class="alert-info">
+
+        <h2>
+            ⚠️ Emergency Guidelines
+        </h2>
+
+
+        <div class="guideline">
+
+            <span>1</span>
+
+            <p>
+                Stay calm and move to a safe location.
+            </p>
+
+        </div>
+
+
+        <div class="guideline">
+
+            <span>2</span>
+
+            <p>
+                Provide the exact emergency location.
+            </p>
+
+        </div>
+
+
+        <div class="guideline">
+
+            <span>3</span>
+
+            <p>
+                Select the correct disaster severity.
+            </p>
+
+        </div>
+
+
+        <div class="guideline">
+
+            <span>4</span>
+
+            <p>
+                Follow instructions from emergency
+                response teams.
+            </p>
+
+        </div>
+
+
+        <div class="emergency-numbers">
+
+            <h3>
+                Emergency Numbers
+            </h3>
+
+            <p>
+                👮 Police: <b>112</b>
+            </p>
+
+            <p>
+                🚒 Fire: <b>101</b>
+            </p>
+
+            <p>
+                🚑 Ambulance: <b>108</b>
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ======================================
+     FOOTER
+====================================== -->
+
+<footer>
+
+    <p>
+        © 2026 Disaster Management &
+        Emergency Alert System
+    </p>
+
+    <p>
+        College Prototype
+    </p>
+
+</footer>
+
+
+
+<script src="script.js"></script>
+
+
+
+<script>
+
+
+// ======================================
+// LOAD SELECTED EMERGENCY
+// ======================================
+
+function loadSelectedEmergency() {
+
+    const selectedId =
+        localStorage.getItem(
+            "selectedEmergencyId"
+        );
+
+
+    // No selected incident
+    // Show new report form
+
+    if (!selectedId) {
+
+        showReportForm();
+
+        return;
+
+    }
+
+
+    const reports =
+        JSON.parse(
+            localStorage.getItem(
+                "disasterReports"
+            )
+        ) || [];
+
+
+    const report =
+        reports.find(function(item) {
+
+            return String(item.id) ===
+                   String(selectedId);
+
+        });
+
+
+    // Report not found
+
+    if (!report) {
+
+        localStorage.removeItem(
+            "selectedEmergencyId"
+        );
+
+        showReportForm();
+
+        return;
+
+    }
+
+
+    // ==================================
+    // SHOW DETAILS
+    // ==================================
+
+    document.getElementById(
+        "reportSection"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "emergencyDetails"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "detailType"
+    ).innerText =
+        report.type || "-";
+
+
+    document.getElementById(
+        "detailLocation"
+    ).innerText =
+        report.location || "-";
+
+
+    document.getElementById(
+        "detailSeverity"
+    ).innerText =
+        report.severity || "-";
+
+
+    document.getElementById(
+        "detailDescription"
+    ).innerText =
+        report.description || "-";
+
+
+    document.getElementById(
+        "detailContact"
+    ).innerText =
+        report.contact || "Not provided";
+
+
+    document.getElementById(
+        "detailDate"
+    ).innerText =
+        report.date || "-";
+
+
+    document.getElementById(
+        "detailStatus"
+    ).innerText =
+        report.status ||
+        "Under Investigation";
+
+}
+
+
+
+// ======================================
+// SHOW NEW REPORT FORM
+// ======================================
+
+function showReportForm() {
+
+    document.getElementById(
+        "emergencyDetails"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "reportSection"
+    ).style.display = "block";
+
+}
+
+
+
+// ======================================
+// NEW INCIDENT REPORT
+// ======================================
+
+function newIncidentReport() {
+
+    // Remove selected incident only
+
+    localStorage.removeItem(
+        "selectedEmergencyId"
+    );
+
+
+    // Show form
+
+    showReportForm();
+
+
+    // Reset form
+
+    const form =
+        document.getElementById(
+            "emergencyForm"
+        );
+
+
+    if (form) {
+
+        form.reset();
+
+    }
+
+
+    // Scroll to form
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+
+// ======================================
+// SUBMIT NEW EMERGENCY REPORT
+// ======================================
+
+document.getElementById(
+    "emergencyForm"
+).addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+
+        const type =
+            document.getElementById(
+                "disasterType"
+            ).value;
+
+
+        const location =
+            document.getElementById(
+                "location"
+            ).value.trim();
+
+
+        const severity =
+            document.getElementById(
+                "severity"
+            ).value;
+
+
+        const description =
+            document.getElementById(
+                "description"
+            ).value.trim();
+
+
+        const contact =
+            document.getElementById(
+                "contact"
+            ).value.trim();
+
+
+
+        // ==================================
+        // VALIDATION
+        // ==================================
+
+        if (
+            type === "" ||
+            location === "" ||
+            severity === "" ||
+            description === ""
+        ) {
+
+            alert(
+                "⚠️ Please fill all required fields."
+            );
+
+            return;
+
+        }
+
+
+        // Contact validation
+
+        if (
+            contact !== "" &&
+            !/^[0-9]{10}$/.test(contact)
+        ) {
+
+            alert(
+                "⚠️ Please enter a valid 10-digit contact number."
+            );
+
+            return;
+
+        }
+
+
+
+        // ==================================
+        // CREATE REPORT
+        // ==================================
+
+        const report = {
+
+            id: Date.now(),
+
+            type: type,
+
+            location: location,
+
+            severity: severity,
+
+            description: description,
+
+            contact: contact,
+
+            date:
+                new Date().toLocaleString(),
+
+            status:
+                "Under Investigation"
+
+        };
+
+
+
+        // ==================================
+        // GET OLD REPORTS
+        // ==================================
+
+        let reports =
+            JSON.parse(
+                localStorage.getItem(
+                    "disasterReports"
+                )
+            ) || [];
+
+
+
+        // ==================================
+        // ADD NEW REPORT
+        // ==================================
+
+        reports.push(report);
+
+
+
+        // ==================================
+        // SAVE REPORT
+        // ==================================
+
+        localStorage.setItem(
+            "disasterReports",
+            JSON.stringify(reports)
+        );
+
+
+        localStorage.setItem(
+            "latestEmergencyId",
+            report.id
+        );
+
+
+        // Remove selected old incident
+
+        localStorage.removeItem(
+            "selectedEmergencyId"
+        );
+
+
+
+        // ==================================
+        // SUCCESS
+        // ==================================
+
+        alert(
+            "🚨 EMERGENCY ALERT SENT!\n\n" +
+
+            "Disaster: " + type +
+
+            "\nLocation: " + location +
+
+            "\nSeverity: " + severity +
+
+            "\n\nResponse team has been notified."
+        );
+
+
+
+        // ==================================
+        // GO DASHBOARD
+        // ==================================
+
+        window.location.href =
+            "dashboard.html";
+
+    }
+);
+
+
+
+// ======================================
+// PAGE LOAD
+// ======================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        loadSelectedEmergency();
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>

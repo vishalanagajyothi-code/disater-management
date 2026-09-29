@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>D-MAS Admin Login</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         ADMIN LOGIN
+    ========================== -->
+
+    <div class="admin-login-page">
+
+
+        <div class="admin-login-card">
+
+
+            <!-- ICON -->
+
+            <div class="admin-login-icon">
+                👨‍💼
+            </div>
+
+
+            <!-- TITLE -->
+
+            <h1>
+                🚨 D-MAS
+            </h1>
+
+            <h2>
+                Admin Login
+            </h2>
+
+            <p>
+                Administrator access only
+            </p>
+
+
+            <!-- LOGIN FORM -->
+
+            <form onsubmit="adminLogin(event)">
+
+
+                <!-- USERNAME -->
+
+                <div class="login-field">
+
+                    <label for="adminUsername">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="adminUsername"
+                        placeholder="Enter username"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- PASSWORD -->
+
+                <div class="login-field">
+
+                    <label for="adminPassword">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="adminPassword"
+                        placeholder="Enter password"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- LOGIN BUTTON -->
+
+                <button
+                    type="submit"
+                    class="admin-login-btn">
+
+                    🔐 Login
+
+                </button>
+
+
+            </form>
+
+
+            <!-- BACK BUTTON -->
+
+            <button
+                type="button"
+                class="back-dashboard-btn"
+                onclick="openDashboard()">
+
+                ← Back to Dashboard
+
+            </button>
+
+
+            <!-- LOGIN MESSAGE -->
+
+            <p
+                id="loginMessage"
+                class="login-message">
+            </p>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

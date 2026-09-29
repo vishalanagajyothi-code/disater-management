@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>D-MAS Emergency Reports</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="main-header">
+
+        <div class="logo">
+            🚨 D-MAS
+        </div>
+
+        <nav class="main-nav">
+
+            <button onclick="openDashboard()">
+                🏠 Dashboard
+            </button>
+
+            <button onclick="openAlert()">
+                🚨 Report Emergency
+            </button>
+
+            <button onclick="openMap()">
+                🗺️ Map
+            </button>
+
+            <button onclick="openShelters()">
+                🏠 Shelters
+            </button>
+
+            <button onclick="openRescue()">
+                🚑 Rescue Teams
+            </button>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="reports-container">
+
+        <div class="page-title">
+
+            <h1>
+                📋 Emergency Reports
+            </h1>
+
+            <p>
+                View all reported emergencies and their current status.
+            </p>
+
+        </div>
+
+
+        <!-- ================= REPORT SUMMARY ================= -->
+
+        <div class="report-summary">
+
+            <div class="summary-card">
+
+                <h3>
+                    📊 Total Reports
+                </h3>
+
+                <div
+                    id="totalReports"
+                    class="summary-number">
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <h3>
+                    🔴 Active Reports
+                </h3>
+
+                <div
+                    id="activeReports"
+                    class="summary-number">
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <h3>
+                    ✅ Resolved
+                </h3>
+
+                <div
+                    id="resolvedReports"
+                    class="summary-number">
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= SEARCH ================= -->
+
+        <div class="reports-search">
+
+            <input
+                type="text"
+                id="reportSearch"
+                placeholder="🔍 Search by emergency type or location..."
+                onkeyup="filterReports()">
+
+        </div>
+
+
+        <!-- ================= REPORT TABLE ================= -->
+
+        <section class="reports-section">
+
+            <div class="table-container">
+
+                <table class="reports-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Emergency
+                            </th>
+
+                            <th>
+                                Location
+                            </th>
+
+                            <th>
+                                Severity
+                            </th>
+
+                            <th>
+                                Date & Time
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="reportsTableBody">
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                style="text-align:center;">
+
+                                Loading reports...
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= NO REPORT MESSAGE ================= -->
+
+        <div
+            id="noReportsMessage"
+            class="no-reports-message">
+
+            📭 No emergency reports available.
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="main-footer">
+
+        <p>
+            🚨 D-MAS — Disaster Management and Emergency Alert System
+        </p>
+
+        <p>
+            Emergency Reports
+        </p>
+
+    </footer>
+
+
+    <!-- ================= SCRIPT ================= -->
+
+    <script src="script.js"></script>
+
+
+    <script>
+
+        function loadReportsPage() {
+
+            var table =
+                document.getElementById("reportsTableBody");
+
+            var noMessage =
+                document.getElementById("noReportsMessage");
+
+            var total =
+                document.getElementById("totalReports");
+
+            var active =
+                document.getElementById("activeReports");
+
+            var resolved =
+                document.getElementById("resolvedReports");
+
+
+            if (!table) return;
+
+
+            var reports =
+                getEmergencyReports();
+
+
+            table.innerHTML = "";
+
+
+            var activeCount = 0;
+            var resolvedCount = 0;
+
+
+            if (reports.length === 0) {
+
+                if (noMessage) {
+                    noMessage.style.display = "block";
+                }
+
+                if (total) {
+                    total.innerText = "0";
+                }
+
+                if (active) {
+                    active.innerText = "0";
+                }
+
+                if (resolved) {
+                    resolved.innerText = "0";
+                }
+
+                return;
+
+            }
+
+
+            if (noMessage) {
+                noMessage.style.display = "none";
+            }
+
+
+            reports
+                .slice()
+                .reverse()
+                .forEach(function(report) {
+
+                    if (report.status === "Resolved") {
+
+                        resolvedCount++;
+
+                    } else {
+
+                        activeCount++;
+
+                    }
+
+
+                    var row =
+                        document.createElement("tr");
+
+
+                    row.style.cursor = "pointer";
+
+
+                    row.onclick = function() {
+
+                        openEmergencyDetails(report.id);
+
+                    };
+
+
+                    var severity =
+                        report.severity || "Medium";
+
+
+                    var severityClass =
+                        severity.toLowerCase();
+
+
+                    var status =
+                        report.status ||
+                        "Under Investigation";
+
+
+                    var statusClass =
+                        "investigating";
+
+
+                    if (status === "In Progress") {
+
+                        statusClass = "progress";
+
+                    }
+
+                    else if (status === "Resolved") {
+
+                        statusClass = "monitoring";
+
+                    }
+
+
+                    row.innerHTML = `
+
+                        <td>
+
+                            ${getEmergencyIcon(report.type)}
+
+                            ${report.type || "Emergency"}
+
+                        </td>
+
+
+                        <td>
+
+                            ${report.location || "Unknown"}
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="severity ${severityClass}">
+
+                                ${severity}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            ${report.date || "Just now"}
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="status ${statusClass}">
+
+                                ${status}
+
+                            </span>
+
+                        </td>
+
+                    `;
+
+
+                    table.appendChild(row);
+
+                });
+
+
+            if (total) {
+
+                total.innerText =
+                    reports.length;
+
+            }
+
+
+            if (active) {
+
+                active.innerText =
+                    activeCount;
+
+            }
+
+
+            if (resolved) {
+
+                resolved.innerText =
+                    resolvedCount;
+
+            }
+
+        }
+
+
+        function filterReports() {
+
+            var searchInput =
+                document.getElementById("reportSearch");
+
+            var searchText =
+                searchInput.value
+                    .toLowerCase()
+                    .trim();
+
+
+            var rows =
+                document.querySelectorAll(
+                    "#reportsTableBody tr"
+                );
+
+
+            var visibleCount = 0;
+
+
+            rows.forEach(function(row) {
+
+                var text =
+                    row.innerText.toLowerCase();
+
+
+                if (text.includes(searchText)) {
+
+                    row.style.display = "";
+
+                    visibleCount++;
+
+                }
+
+                else {
+
+                    row.style.display = "none";
+
+                }
+
+            });
+
+
+            var noMessage =
+                document.getElementById(
+                    "noReportsMessage"
+                );
+
+
+            if (noMessage) {
+
+                if (visibleCount === 0) {
+
+                    noMessage.style.display =
+                        "block";
+
+                }
+
+                else {
+
+                    noMessage.style.display =
+                        "none";
+
+                }
+
+            }
+
+        }
+
+
+        window.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+                loadReportsPage();
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
+
